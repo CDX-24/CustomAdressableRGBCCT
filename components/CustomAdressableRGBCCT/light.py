@@ -36,7 +36,7 @@ from .const import (
     ONE_WIRE_CHIPS,
 )
 
-neopixelbus_ns = cg.esphome_ns.namespace("neopixelbus_rgbww")
+neopixelbus_ns = cg.esphome_ns.namespace("neopixelbus")
 NeoPixelBusLightOutputBase = neopixelbus_ns.class_(
     "NeoPixelBusLightOutputBase", light.AddressableLight
 )
