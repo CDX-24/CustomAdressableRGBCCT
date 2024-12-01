@@ -227,7 +227,7 @@ def _esp8266_dma_to_code(config, chip: str, inverted: bool):
     }
 
     speed = lookup[(chip, inverted)]
-    return neo_ns.NeoEsp8266DmaMethodBase.template(speed)
+    return speed
 
 
 def _esp8266_dma_extra_validate(config):
