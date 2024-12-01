@@ -1,5 +1,6 @@
 #pragma once
-#define USE_ARDUINO
+
+
 #ifdef USE_ARDUINO
 
 #include "esphome/core/macros.h"
