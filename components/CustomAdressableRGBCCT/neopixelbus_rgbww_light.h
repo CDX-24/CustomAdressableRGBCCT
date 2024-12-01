@@ -143,7 +143,7 @@ class NeoPixelRGBWLightOutput : public NeoPixelBusLightOutputBase<T_METHOD, T_CO
                                base + this->rgb_offsets_[3], this->effect_data_ + index, &this->correction_);
   }
 };
-template<typename T_METHOD, typename T_COLOR_FEATURE = Neo6ByteElements>
+template<typename T_METHOD, typename T_COLOR_FEATURE = NeoRgbwwFeature>
 class NeoPixelRGBWWLightOutput : public NeoPixelBusLightOutputBase<T_METHOD, T_COLOR_FEATURE> {
  public:
   light::LightTraits get_traits() override {
