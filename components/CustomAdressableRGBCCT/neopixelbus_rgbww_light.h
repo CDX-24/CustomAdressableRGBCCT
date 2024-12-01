@@ -8,6 +8,8 @@
 #include "esphome/core/color.h"
 #include "esphome/components/light/light_output.h"
 #include "esphome/components/light/addressable_light.h"
+#include "esp_hsv_color.h"
+#include "esp_color_correction.h"
 
 #include "NeoPixelBus.h"
 
@@ -139,7 +141,7 @@ class NeoPixelRGBWLightOutput : public NeoPixelBusLightOutputBase<T_METHOD, T_CO
   light::ESPColorView get_view_internal(int32_t index) const override {  // NOLINT
     uint8_t *base = this->controller_->Pixels() + 4ULL * index;
     return light::ESPColorView(base + this->rgb_offsets_[0], base + this->rgb_offsets_[1], base + this->rgb_offsets_[2],
-                               base + this->rgb_offsets_[3], this->effect_data_ + index, &this->correction_);
+                               base + this->rgb_offsets_[3], base + this->rgb_offsets_[4], this->effect_data_ + index, &this->correction_);
   }
 };
 template<typename T_METHOD, typename T_COLOR_FEATURE = NeoRgbwwFeature>
@@ -154,12 +156,43 @@ class NeoPixelRGBWWLightOutput : public NeoPixelBusLightOutputBase<T_METHOD, T_C
  protected:
   light::ESPColorView get_view_internal(int32_t index) const override {  // NOLINT
     uint8_t *base = this->controller_->Pixels() + 5ULL * index;
-    return light::ESPColorView(base + this->rgb_offsets_[0], base + this->rgb_offsets_[1], base + this->rgb_offsets_[2],
+    return light_RGBWW::ESPColorViewRGBWW(base + this->rgb_offsets_[0], base + this->rgb_offsets_[1], base + this->rgb_offsets_[2],
                                base + this->rgb_offsets_[3], this->effect_data_ + index, &this->correction_);
   }
 };
 
 }  // namespace neopixelbus
 }  // namespace esphome
+
+namespace light_RGBWW {
+class ESPColorViewRGBWW {
+ public:
+  ESPColorViewRGBWW(uint8_t *r, uint8_t *g, uint8_t *b, uint8_t *ww, uint8_t *cw, uint8_t *effect_data, ColorCorrection *correction)
+      : r_(r), g_(g), b_(b), ww_(ww), cw_(cw), effect_data_(effect_data), correction_(correction) {}
+
+  void set_rgbww(float red, float green, float blue, float warm_white, float cool_white) {
+    *this->r_ = this->apply_correction(red);
+    *this->g_ = this->apply_correction(green);
+    *this->b_ = this->apply_correction(blue);
+    *this->ww_ = this->apply_correction(warm_white);
+    *this->cw_ = this->apply_correction(cool_white);
+  }
+
+  float get_cw() const { return *this->cw_ / 255.0f; }
+
+ private:
+  uint8_t apply_correction(float value) const {
+    return static_cast<uint8_t>(value * 255.0f * this->correction_->factor);
+  }
+
+  uint8_t *r_;
+  uint8_t *g_;
+  uint8_t *b_;
+  uint8_t *ww_;
+  uint8_t *cw_;
+  uint8_t *effect_data_;
+  ColorCorrection *correction_;
+};
+}  // namespace light
 
 #endif  // USE_ARDUINO
