@@ -4,6 +4,7 @@ from esphome import pins
 from esphome.components import light
 from esphome.const import (
     CONF_CHANNEL,
+    #CONF_COLOR_INTERLOCK,
     CONF_CLOCK_PIN,
     CONF_DATA_PIN,
     CONF_METHOD,
@@ -188,6 +189,7 @@ CONFIG_SCHEMA = cv.All(
             cv.Optional(CONF_CLOCK_PIN): pins.internal_gpio_output_pin_number,
             cv.Optional(CONF_DATA_PIN): pins.internal_gpio_output_pin_number,
             cv.Required(CONF_NUM_LEDS): cv.positive_not_null_int,
+            #cv.Optional(CONF_COLOR_INTERLOCK, default=False): cv.boolean,
         }
     ).extend(cv.COMPONENT_SCHEMA),
     _choose_default_method,
@@ -222,6 +224,7 @@ async def to_code(config):
         )
 
     cg.add(var.set_pixel_order(getattr(ESPNeoPixelOrder, config[CONF_TYPE])))
+    #cg.add(var.set_color_interlock(config[CONF_COLOR_INTERLOCK]))
 
     # https://github.com/Makuna/NeoPixelBus/blob/master/library.json
     # Version Listed Here: https://registry.platformio.org/libraries/makuna/NeoPixelBus/versions
