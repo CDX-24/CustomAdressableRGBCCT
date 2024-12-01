@@ -210,20 +210,20 @@ def _esp8266_dma_to_code(config, chip: str, inverted: bool):
     }.get(chip, chip)
 
     lookup = {
-        (CHIP_WS2812X, False): neo_ns.NeoWs2812xMethod,
-        (CHIP_SK6812, False): neo_ns.NeoSk6812Method,
-        (CHIP_TM1814, True): neo_ns.NeoTm1814InvertedMethod,
-        (CHIP_TM1829, True): neo_ns.NeoTm1829InvertedMethod,
-        (CHIP_800KBPS, False): neo_ns.Neo800KbpsMethod,
-        (CHIP_400KBPS, False): neo_ns.Neo400KbpsMethod,
-        (CHIP_APA106, False): neo_ns.NeoApa106Method,
-        (CHIP_WS2812X, True): neo_ns.NeoWs2812xInvertedMethod,
-        (CHIP_SK6812, True): neo_ns.NeoSk6812InvertedMethod,
-        (CHIP_TM1814, False): neo_ns.NeoTm1814Method,
-        (CHIP_TM1829, False): neo_ns.NeoTm1829Method,
-        (CHIP_800KBPS, True): neo_ns.Neo800KbpsInvertedMethod,
-        (CHIP_400KBPS, True): neo_ns.Neo400KbpsInvertedMethod,
-        (CHIP_APA106, True): neo_ns.NeoApa106InvertedMethod,
+        (CHIP_WS2812X, False): neo_ns.NeoEsp8266DmaWs2812xMethod,
+        (CHIP_SK6812, False): neo_ns.NeoEsp8266DmaSk6812Method,
+        (CHIP_TM1814, True): neo_ns.NeoEsp8266DmaInvertedTm1814Method,
+        (CHIP_TM1829, True): neo_ns.NeoEsp8266DmaInvertedTm1829Method,
+        (CHIP_800KBPS, False): neo_ns.NeoEsp8266Dma800KbpsMethod,
+        (CHIP_400KBPS, False): neo_ns.NeoEsp8266Dma400KbpsMethod,
+        (CHIP_APA106, False): neo_ns.NeoEsp8266DmaApa106Method,
+        (CHIP_WS2812X, True): neo_ns.NeoEsp8266DmaInvertedWs2812xMethod,
+        (CHIP_SK6812, True): neo_ns.NeoEsp8266DmaInvertedSk6812Method,
+        (CHIP_TM1814, False): neo_ns.NeoEsp8266DmaTm1814Method,
+        (CHIP_TM1829, False): neo_ns.NeoEsp8266DmaTm1829Method,
+        (CHIP_800KBPS, True): neo_ns.NeoEsp8266DmaInverted800KbpsMethod,
+        (CHIP_400KBPS, True): neo_ns.NeoEsp8266DmaInverted400KbpsMethod,
+        (CHIP_APA106, True): neo_ns.NeoEsp8266DmaInvertedApa106Method,
     }
 
     speed = lookup[(chip, inverted)]
