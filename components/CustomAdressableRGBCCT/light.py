@@ -5,7 +5,7 @@ from esphome import pins
 from esphome.const import (
     CONF_COLOR_INTERLOCK,
     CONF_CONSTANT_BRIGHTNESS,
-    CONF_ID,
+    CONF_OUTPUT_ID,
     CONF_COLD_WHITE_COLOR_TEMPERATURE,
     CONF_WARM_WHITE_COLOR_TEMPERATURE,
     CONF_PIN,
@@ -18,7 +18,7 @@ LSCRGBWWLightOutput = lsc_rgbww_ns.class_("LSCRGBWWLightOutput", light.LightOutp
 CONFIG_SCHEMA = cv.All(
     light.RGB_LIGHT_SCHEMA.extend(
         {
-            cv.GenerateID(CONF_ID): cv.declare_id(LSCRGBWWLightOutput),
+            cv.GenerateID(CONF_OUTPUT_ID): cv.declare_id(LSCRGBWWLightOutput),
             cv.Optional(CONF_COLD_WHITE_COLOR_TEMPERATURE): cv.color_temperature,
             cv.Optional(CONF_WARM_WHITE_COLOR_TEMPERATURE): cv.color_temperature,
             cv.Optional(CONF_CONSTANT_BRIGHTNESS, default=False): cv.boolean,
@@ -35,7 +35,7 @@ CONFIG_SCHEMA = cv.All(
 
 
 async def to_code(config):
-    var = cg.new_Pvariable(config[CONF_ID])
+    var = cg.new_Pvariable(config[CONF_OUTPUT_ID])
 
     await light.register_light(var, config)
 
