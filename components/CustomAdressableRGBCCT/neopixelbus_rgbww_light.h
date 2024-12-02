@@ -15,12 +15,10 @@
 namespace esphome {
 namespace lsc_rgbww {
 
-class LSCRGBWWLightOutput : public light::LightOutput, public Component {
+class LSCRGBWWLightOutput : public light::LightOutput {
  public:
   void config(uint16_t count_pixels, uint8_t pin) {
     this->strip_ = new NeoPixelBus<NeoGrbcwxFeature, NeoWs2812xMethod>(count_pixels, pin);
-  }
-  void setup() override {
     this->strip_->Begin();  // Example initialization method
     this->strip_->Show();
   }
