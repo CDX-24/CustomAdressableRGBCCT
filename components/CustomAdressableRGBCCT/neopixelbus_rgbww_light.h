@@ -23,7 +23,7 @@ class LSCRGBWWLightOutput : public light::LightOutput {
   // void set_cold_white(uint8_t *cold_white) { cold_white_ = cold_white; }
   // void set_warm_white(uint8_t *warm_white) { warm_white_ = warm_white; }
   void config(uint16_t count_pixels, uint8_t pin) {
-    this->strip = new NeoPixelBus<NeoGrbFeature, NeoWs2812xMethod>(count_pixels, pin);
+    this->strip = new NeoPixelBus<NeoGrbcwxFeature, NeoWs2812xMethod>(count_pixels, pin);
     this->strip->Begin();  // Example initialization method
     this->strip->Show();
   }
@@ -51,7 +51,7 @@ class LSCRGBWWLightOutput : public light::LightOutput {
   }
 
  protected:
-  NeoPixelBus<NeoGrbFeature, NeoWs2812xMethod> *strip;
+  NeoPixelBus<NeoGrbcwxFeature, NeoWs2812xMethod> *strip;
   uint8_t *red_;
   uint8_t *green_;
   uint8_t *blue_;
