@@ -4,9 +4,9 @@
 
 #include "esphome/core/macros.h"
 #include "esphome/core/component.h"
-#include "esphome.h"
 #include "esphome/core/helpers.h"
 #include "esphome/core/color.h"
+#include "esp_log.h"
 #include "esphome/components/light/light_output.h"
 #include "esphome/components/light/addressable_light.h"
 #include "esphome/components/light/esp_color_correction.h"
@@ -20,7 +20,7 @@ class LSCRGBWWLightOutput : public light::LightOutput {
  public:
   void config(uint16_t count_pixels, uint8_t pin) {
     this->strip_ = new NeoPixelBus<NeoGrbcwxFeature, NeoWs2812xMethod>(count_pixels, pin);
-    esphome::ESP_LOGD(__FILE__, "Setting up !");
+    ESP_LOGD(__FILE__, "Setting up !");
     this->strip_->Begin();  // Example initialization method
     this->strip_->Show();
   }
@@ -41,10 +41,10 @@ class LSCRGBWWLightOutput : public light::LightOutput {
   }
   void write_state(light::LightState *state) override {
     float red, green, blue, cwhite, wwhite;
-    esphome::ESP_LOGD(__FILE__, "1");
+    ESP_LOGD(__FILE__, "1");
     state->current_values_as_rgbww(&red, &green, &blue, &cwhite, &wwhite, this->constant_brightness_);
     RgbwwColor color = RgbwwColor(red, green, blue, cwhite, wwhite);
-    esphome::ESP_LOGD(__FILE__, "2");
+    ESP_LOGD(__FILE__, "2");
     this->strip_->SetPixelColor(0, color);
     this->strip_->Show();
   }
