@@ -45,7 +45,7 @@ class LSCRGBWWLightOutput : public light::LightOutput {
     float red, green, blue, cwhite, wwhite;
     state->current_values_as_rgbww(&red, &green, &blue, &cwhite, &wwhite, this->constant_brightness_);
     RgbwwColor color = RgbwwColor(esphome::light::to_uint8_scale(red), esphome::light::to_uint8_scale(blue), esphome::light::to_uint8_scale(green), esphome::light::to_uint8_scale(wwhite), esphome::light::to_uint8_scale(cwhite));
-    this->strip_->SetPixelColor(0, color);
+    this->strip_->ClearTo(0, color);
     this->strip_->Show();
   }
 
