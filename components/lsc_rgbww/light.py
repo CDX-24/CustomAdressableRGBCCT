@@ -38,7 +38,7 @@ async def to_code(config):
     var = cg.new_Pvariable(config[CONF_OUTPUT_ID])
 
     await light.register_light(var, config)
-
+    cg.add(var.config(config["pixel_number"], config[CONF_PIN]))
     if CONF_COLD_WHITE_COLOR_TEMPERATURE in config:
         cg.add(
             var.set_cold_white_temperature(config[CONF_COLD_WHITE_COLOR_TEMPERATURE])
@@ -47,7 +47,7 @@ async def to_code(config):
         cg.add(
             var.set_warm_white_temperature(config[CONF_WARM_WHITE_COLOR_TEMPERATURE])
         )
-    cg.add(var.config(config["pixel_number"], config[CONF_PIN]))
+    
     cg.add(var.set_constant_brightness(config[CONF_CONSTANT_BRIGHTNESS]))
     cg.add(var.set_color_interlock(config[CONF_COLOR_INTERLOCK]))
 
