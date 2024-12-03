@@ -8,6 +8,7 @@
 #include "esphome/core/color.h"
 #include "esphome/core/log.h"
 #include "esphome/components/light/light_output.h"
+#include "esphome/components/light/light_color_values.h"
 #include "esphome/components/light/addressable_light.h"
 #include "esphome/components/light/esp_color_correction.h"
 #include "esphome/components/light/esp_hsv_color.h"
@@ -43,7 +44,7 @@ class LSCRGBWWLightOutput : public light::LightOutput {
   void write_state(light::LightState *state) override {
     float red, green, blue, cwhite, wwhite;
     state->current_values_as_rgbww(&red, &green, &blue, &cwhite, &wwhite, this->constant_brightness_);
-    RgbwwColor color = RgbwwColor((int)red*255, (int)green*255, (int)blue*255, (int)cwhite*255, (int)wwhite*255);
+    RgbwwColor color = RgbwwColor(to_uint8_scale(red), to_uint8_scale(green), to_uint8_scale(blue), to_uint8_scale(cwhite), to_uint8_scale(wwhite));
     this->strip_->SetPixelColor(0, color);
     this->strip_->Show();
   }
