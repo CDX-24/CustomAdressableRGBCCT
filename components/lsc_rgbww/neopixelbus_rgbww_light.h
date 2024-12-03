@@ -19,10 +19,12 @@ namespace lsc_rgbww {
 class LSCRGBWWLightOutput : public light::LightOutput {
  public:
   void config(uint16_t count_pixels, uint8_t pin) {
-    this->strip_ = new NeoPixelBus<NeoGrbcwxFeature, NeoWs2812xMethod>(count_pixels, pin);
     ESP_LOGI(__FILE__, "Setting up !");
+    this->strip_ = new NeoPixelBus<NeoGrbcwxFeature, NeoWs2812xMethod>(count_pixels, pin);
+    
     this->strip_->Begin();  // Example initialization method
     this->strip_->Show();
+    ESP_LOGI(__FILE__, "Setting up done!");
   }
   void set_cold_white_temperature(float cold_white_temperature) { cold_white_temperature_ = cold_white_temperature; }
   void set_warm_white_temperature(float warm_white_temperature) { warm_white_temperature_ = warm_white_temperature; }
