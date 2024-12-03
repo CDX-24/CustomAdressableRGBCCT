@@ -45,7 +45,7 @@ class LSCRGBWWLightOutput : public light::LightOutput {
     float red, green, blue, cwhite, wwhite;
     ESP_LOGI(__FILE__, "1");
     state->current_values_as_rgbww(&red, &green, &blue, &cwhite, &wwhite, this->constant_brightness_);
-    RgbwwColor color = RgbwwColor(red, green, blue, cwhite, wwhite);
+    RgbwwColor color = RgbwwColor((int)red*255, (int)green*255, (int)blue*255, (int)cwhite*255, (int)wwhite*255);
     ESP_LOGI(__FILE__, "2");
     this->strip_->SetPixelColor(0, color);
     this->strip_->Show();
