@@ -43,10 +43,6 @@ class LSCRGBWWLightOutput : public light::LightOutput {
   }
   void write_state(light::LightState *state) override {
     float red, green, blue, cwhite, wwhite;
-    if (this->light_state_->remote_values.is_on()) {
-      this->mark_shown_();
-      return;
-    }
     state->current_values_as_rgbww(&red, &green, &blue, &cwhite, &wwhite, this->constant_brightness_);
     RgbwwColor color = RgbwwColor(esphome::light::to_uint8_scale(red), esphome::light::to_uint8_scale(blue), esphome::light::to_uint8_scale(green), esphome::light::to_uint8_scale(wwhite), esphome::light::to_uint8_scale(cwhite));
     this->strip_->ClearTo(color);
